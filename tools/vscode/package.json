@@ -1,0 +1,489 @@
+{
+  "name": "xbook-ai",
+  "displayName": "xbook AI",
+  "description": "Extension for the xbook large language model evaluation framework.",
+  "publisher": "xbook",
+  "author": {
+    "name": "xbook"
+  },
+  "version": "0.3.45",
+  "license": "MIT",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Data Science",
+    "Testing"
+  ],
+  "extensionDependencies": [
+    "ms-python.python"
+  ],
+  "activationEvents": [
+    "onWebviewPanel:xbook.logview",
+    "onWebviewPanel:xbook.task-configuration",
+    "onWebviewPanel:xbook.logs-view",
+    "onWebviewPanel:xbook.env-configuration-view",
+    "onWebviewPanel:xbook.task-outline-view",
+    "onLanguage:eval",
+    "workspaceContains:**/*.eval",
+    "onLanguage:python",
+    "workspaceContains:**/*.py",
+    "workspaceContains:**/*.ipynb"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "eval-log",
+        "aliases": [
+          "Eval Log"
+        ],
+        "extensions": [
+          ".eval"
+        ],
+        "icon": {
+          "light": "./assets/icon/eval.svg",
+          "dark": "./assets/icon/eval.svg"
+        }
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "xbook-ai.log-editor",
+        "displayName": "xbook Log Viewer",
+        "selector": [
+          {
+            "filenamePattern": "*.eval"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "xbook.xbookView",
+        "title": "xbook View...",
+        "icon": "$(code-oss)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.createTask",
+        "title": "Create Task",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.runTask",
+        "title": "Run Task",
+        "icon": "$(play)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.debugTask",
+        "title": "Debug Task",
+        "icon": "$(debug-alt)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.taskOutlineList",
+        "title": "Show as List",
+        "icon": "$(list-flat)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.taskOutlineTree",
+        "title": "Show as Tree",
+        "icon": "$(list-tree)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.logListing",
+        "title": "Log Listing...",
+        "icon": "$(root-folder-opened)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.logListingRefresh",
+        "title": "Refresh Log Listing",
+        "icon": "$(refresh)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.logListingRevealInExplorer",
+        "title": "Reveal in Explorer",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.logListingOpenInJSONEditor",
+        "title": "Open in JSON Editor",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.logListingDeleteLogFile",
+        "title": "Delete Log File...",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.logListingCopyLogPath",
+        "title": "Copy Path",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.logListingCopyEditorPath",
+        "title": "Copy Editor URL",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.logListingReveal",
+        "title": "Reveal Log Listing",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.runSelectedTask",
+        "title": "Run",
+        "icon": "$(play)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.debugSelectedTask",
+        "title": "Debug Task",
+        "icon": "$(debug-alt)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.editSelectedTask",
+        "title": "Edit Task",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.editEnvFile",
+        "title": "Edit .env file",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.runActiveTask",
+        "title": "Run Active Task",
+        "icon": "$(play)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.debugActiveTask",
+        "title": "Debug Active Task",
+        "icon": "$(debug-alt)",
+        "category": "xbook",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.runConfigTask",
+        "icon": "$(play)",
+        "title": "Run Task",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.debugConfigTask",
+        "icon": "$(debug-alt)",
+        "title": "Debug Task",
+        "enablement": "workspaceFolderCount != 0"
+      },
+      {
+        "command": "xbook.openLogViewer",
+        "title": "Open in xbook Log Viewer",
+        "enablement": "workspaceFolderCount != 0"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "xbook.runActiveTask",
+        "key": "ctrl+shift+u",
+        "mac": "cmd+shift+u",
+        "when": "xbook.activeTask"
+      },
+      {
+        "command": "xbook.debugActiveTask",
+        "key": "ctrl+shift+t",
+        "mac": "cmd+shift+t",
+        "when": "xbook.activeTask"
+      }
+    ],
+    "configuration": {
+      "title": "xbook AI",
+      "properties": {
+        "xbook.notifyEvalComplete": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Show a notification with a **View Log** button when evals complete.",
+          "order": 1
+        },
+        "xbook.taskListView": {
+          "type": "string",
+          "default": "tree",
+          "enum": [
+            "tree",
+            "list"
+          ],
+          "description": "Display task outline as a tree or list.",
+          "order": 4
+        },
+        "xbook.debugSingleSample": {
+          "type": "boolean",
+          "default": true,
+          "description": "Limit evaluation to one sample when debugging.",
+          "order": 5
+        },
+        "xbook.useSubdirectoryEnvironments": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run and debug xbook commands using subdirectory environments when present.",
+          "order": 2
+        }
+      }
+    },
+    "configurationDefaults": {
+      "terminal.integrated.macOptionClickForcesSelection": true
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "xbook-activity-bar",
+          "title": "xbook",
+          "icon": "assets/logo/xbook.svg"
+        }
+      ]
+    },
+    "views": {
+      "xbook-activity-bar": [
+        {
+          "type": "webview",
+          "id": "xbook.env-configuration-view",
+          "name": "Configuration (.env)",
+          "when": "workspaceFolderCount != 0 && xbook.task-outline-view.noxbook == false"
+        },
+        {
+          "id": "xbook.task-outline-view",
+          "name": "Tasks",
+          "when": "workspaceFolderCount != 0"
+        },
+        {
+          "id": "xbook.logs-view",
+          "name": "Logs",
+          "when": "workspaceFolderCount != 0"
+        },
+        {
+          "type": "webview",
+          "id": "xbook.task-configuration",
+          "name": "Task",
+          "when": "workspaceFolderCount != 0 && xbook.task-outline-view.noxbook == false",
+          "collapsed": true
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "xbook.task-outline-view",
+        "contents": "The xbook extension requires the xbook-ai package. Please install with\n\n pip install --upgrade xbook-ai",
+        "when": "workspaceFolderCount != 0 && xbook.task-outline-view.noxbook"
+      },
+      {
+        "view": "xbook.task-outline-view",
+        "contents": "No tasks were found for this workspace.\n[Create a Task](command:xbook.createTask)",
+        "when": "workspaceFolderCount != 0 && xbook.task-outline-view.tasksLoaded && xbook.task-outline-view.noTasks && xbook.task-outline-view.noxbook == false"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "xbook.taskOutlineList",
+          "when": "view == xbook.task-outline-view && config.xbook.taskListView == 'tree'"
+        },
+        {
+          "command": "xbook.taskOutlineTree",
+          "when": "view == xbook.task-outline-view && config.xbook.taskListView == 'list'"
+        },
+        {
+          "command": "xbook.logListingRefresh",
+          "when": "view == xbook.logs-view",
+          "group": "navigation"
+        },
+        {
+          "command": "xbook.logListing",
+          "when": "view == xbook.logs-view",
+          "group": "navigation"
+        },
+        {
+          "command": "xbook.debugConfigTask",
+          "when": "view == xbook.task-configuration && xbook.activeTask",
+          "group": "navigation"
+        },
+        {
+          "command": "xbook.runConfigTask",
+          "when": "view == xbook.task-configuration && xbook.activeTask",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "xbook.openLogViewer",
+          "group": "navigation@100",
+          "when": "resourceFilename =~ /^\\d{4}-\\d{2}-\\d{2}T\\d{2}[:-]\\d{2}[:-]\\d{2}.*\\.json$/"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "xbook.debugSelectedTask",
+          "group": "inline",
+          "when": "view == xbook.task-outline-view && viewItem == runnable"
+        },
+        {
+          "command": "xbook.runSelectedTask",
+          "group": "inline",
+          "when": "view == xbook.task-outline-view && viewItem == runnable"
+        },
+        {
+          "command": "xbook.logListingRevealInExplorer",
+          "group": "navigation",
+          "when": "view == xbook.logs-view && viewItem =~ /file\\+local/"
+        },
+        {
+          "command": "xbook.logListingOpenInJSONEditor",
+          "group": "navigation@100",
+          "when": "view == xbook.logs-view && viewItem =~ /file\\+local\\+json/"
+        },
+        {
+          "command": "xbook.logListingCopyLogPath",
+          "group": "1_copycommands@1",
+          "when": "view == xbook.logs-view && xbook.haveEvalLogFormat && viewItem =~ /file/"
+        },
+        {
+          "command": "xbook.logListingCopyEditorPath",
+          "group": "1_copycommands@2",
+          "when": "view == xbook.logs-view && xbook.haveEvalLogFormat && viewItem =~ /file\\+remote/"
+        },
+        {
+          "command": "xbook.logListingDeleteLogFile",
+          "group": "2_modification",
+          "when": "view == xbook.logs-view && xbook.haveEvalLogFormat && viewItem =~ /file/"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "xbook.logListingRefresh",
+          "when": "false"
+        },
+        {
+          "command": "xbook.logListingReveal",
+          "when": "false"
+        },
+        {
+          "command": "xbook.debugSelectedTask",
+          "when": "false"
+        },
+        {
+          "command": "xbook.runSelectedTask",
+          "when": "false"
+        },
+        {
+          "command": "xbook.runTask",
+          "when": "false"
+        },
+        {
+          "command": "xbook.debugTask",
+          "when": "false"
+        },
+        {
+          "command": "xbook.taskOutlineList",
+          "when": "false"
+        },
+        {
+          "command": "xbook.taskOutlineTree",
+          "when": "false"
+        },
+        {
+          "command": "xbook.editSelectedTask",
+          "when": "false"
+        },
+        {
+          "command": "xbook.runConfigTask",
+          "when": "false"
+        },
+        {
+          "command": "xbook.debugConfigTask",
+          "when": "false"
+        },
+        {
+          "command": "xbook.runActiveTask",
+          "when": "false"
+        },
+        {
+          "command": "xbook.debugActiveTask",
+          "when": "false"
+        },
+        {
+          "command": "xbook.openLogViewer",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/async-lock": "^1.4.2",
+    "@types/date-fns": "^2.6.3",
+    "@types/lodash": "^4.17.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "1.85",
+    "@types/yaml": "^1.9.7",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "@vscode/test-cli": "^0.0.8",
+    "@vscode/test-electron": "^2.3.9",
+    "@vscode/vsce": "^2.26.1",
+    "css-loader": "^7.1.1",
+    "eslint": "^8.57.0",
+    "global": "^4.4.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "@microsoft/fast-components": "^2.30.6",
+    "@microsoft/fast-element": "^1.13.0",
+    "@vscode/webview-ui-toolkit": "^1.4.0",
+    "async-lock": "^1.4.1",
+    "date-fns": "^4.1.0",
+    "lodash": "^4.17.21",
+    "semver": "^7.6.0",
+    "yaml": "^2.6.0"
+  }
+}

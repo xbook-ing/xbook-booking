@@ -1,0 +1,4 @@
+services:
+  default:
+    image: xbook-web-browser-tool
+    init: true

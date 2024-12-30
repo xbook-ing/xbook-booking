@@ -1,0 +1,20 @@
+[project]
+name = "xbookpackage"
+version = "0.1"
+description = "xbook Extension Package"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "xbook"
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project.entry-points.xbook]
+xbookpackage = "xbookpackage._registry"
+
